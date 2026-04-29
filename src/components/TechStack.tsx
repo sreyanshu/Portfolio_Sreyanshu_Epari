@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment } from "@react-three/drei";
+import { Environment, Decal } from "@react-three/drei";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import {
   BallCollider,
@@ -11,20 +11,14 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
-const textureLoader = new THREE.TextureLoader();
-const imageUrls = [
-  "/images/react2.webp",
-  "/images/next2.webp",
-  "/images/node2.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/typescript.webp",
-  "/images/javascript.webp",
+const imageURLs = [
+  "/images/c.svg",
+  "/images/java.svg",
+  "/images/nmap.svg",
+  "/images/opencv.svg",
+  "/images/python.svg",
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
-
-const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+const sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
 
 const spheres = [...Array(30)].map(() => ({
   scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
@@ -34,6 +28,7 @@ type SphereProps = {
   vec?: THREE.Vector3;
   scale: number;
   r?: typeof THREE.MathUtils.randFloatSpread;
+  texture: THREE.Texture;
   material: THREE.MeshPhysicalMaterial;
   isActive: boolean;
 };
@@ -42,10 +37,12 @@ function SphereGeo({
   vec = new THREE.Vector3(),
   scale,
   r = THREE.MathUtils.randFloatSpread,
+  texture,
   material,
   isActive,
 }: SphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
+  const initialRotation = useMemo(() => [Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI] as [number, number, number], []);
 
   useFrame((_state, delta) => {
     if (!isActive) return;
@@ -85,8 +82,43 @@ function SphereGeo({
         scale={scale}
         geometry={sphereGeometry}
         material={material}
-        rotation={[0.3, 1, 1]}
-      />
+        rotation={initialRotation}
+      >
+        <Decal
+          position={[0, 0, 1]}
+          rotation={[0, 0, 0]}
+          scale={1.4}
+        >
+          <meshPhysicalMaterial
+            map={texture}
+            polygonOffset
+            polygonOffsetFactor={-1}
+            transparent
+            opacity={1}
+            roughness={0.05}
+            metalness={0.1}
+            clearcoat={1.0}
+            clearcoatRoughness={0.05}
+          />
+        </Decal>
+        <Decal
+          position={[0, 0, -1]}
+          rotation={[0, Math.PI, 0]}
+          scale={1.4}
+        >
+          <meshPhysicalMaterial
+            map={texture}
+            polygonOffset
+            polygonOffsetFactor={-1}
+            transparent
+            opacity={1}
+            roughness={0.05}
+            metalness={0.1}
+            clearcoat={1.0}
+            clearcoatRoughness={0.05}
+          />
+        </Decal>
+      </mesh>
     </RigidBody>
   );
 }
@@ -151,19 +183,26 @@ const TechStack = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const materials = useMemo(() => {
-    return textures.map(
-      (texture) =>
-        new THREE.MeshPhysicalMaterial({
-          map: texture,
-          emissive: "#ffffff",
-          emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
-        })
-    );
+
+  const textures = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    return imageURLs.map((url) => {
+      const texture = loader.load(url);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    });
+  }, []);
+
+  const baseMaterial = useMemo(() => {
+    return new THREE.MeshPhysicalMaterial({
+      color: "#ffffff",
+      metalness: 0.1,
+      roughness: 0.05, // Lower roughness for more smoothness
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.05,
+      opacity: 1,
+      transparent: false,
+    });
   }, []);
 
   return (
@@ -193,7 +232,8 @@ const TechStack = () => {
             <SphereGeo
               key={i}
               {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
+              texture={textures[Math.floor(Math.random() * textures.length)]}
+              material={baseMaterial}
               isActive={isActive}
             />
           ))}

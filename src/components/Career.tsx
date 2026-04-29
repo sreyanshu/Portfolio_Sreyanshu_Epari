@@ -15,43 +15,37 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>B.Tech in Computer Science and Engineering</h4>
+                <h5>Institute of Technical Education and Research (ITER)</h5>
               </div>
-              <h3>20XX</h3>
+              <h3>2026</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Currently pursuing Bachelor of Technology in Computer Science and Engineering. CGPA: 7.86.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Cybersecurity Trainee</h4>
+                <h5>EY-GDS</h5>
               </div>
-              <h3>20XX</h3>
+              <h3>2025</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Applied real-world cybersecurity scenarios to identify vulnerabilities and recommended effective mitigation strategies. Enhanced understanding of network security, access control, and compliance standards. Developed skills in security monitoring, threat analysis, and IAM practices.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Machine Learning Trainee</h4>
+                <h5>Tata Steel</h5>
               </div>
-              <h3>NOW</h3>
+              <h3>2025</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Applied supervised and unsupervised learning to analyze datasets and derive actionable insights. Built predictive models for classification and regression tasks to improve industrial processes. Leveraged domain-specific data to support real-world optimization and analytics challenges.
             </p>
           </div>
         </div>
