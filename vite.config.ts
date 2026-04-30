@@ -2,7 +2,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  base: "/Portfolio_Sreyanshu_Epari/",
+export default defineConfig(({ command }) => {
+  return {
+    plugins: [react()],
+    base: command === "build" ? "/Portfolio_Sreyanshu_Epari/" : "/",
+  };
 });
