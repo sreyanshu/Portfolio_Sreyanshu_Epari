@@ -15,11 +15,10 @@ const SocialIcons = () => {
       const elem = item as HTMLElement;
       const link = elem.querySelector("a") as HTMLElement;
 
-      const rect = elem.getBoundingClientRect();
-      let mouseX = rect.width / 2;
-      let mouseY = rect.height / 2;
-      let currentX = 0;
-      let currentY = 0;
+      let mouseX = 25;
+      let mouseY = 25;
+      let currentX = 25;
+      let currentY = 25;
 
       const updatePosition = () => {
         currentX += (mouseX - currentX) * 0.1;
@@ -32,15 +31,16 @@ const SocialIcons = () => {
       };
 
       const onMouseMove = (e: MouseEvent) => {
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const currentRect = elem.getBoundingClientRect();
+        const x = e.clientX - currentRect.left;
+        const y = e.clientY - currentRect.top;
 
         if (x < 40 && x > 10 && y < 40 && y > 5) {
           mouseX = x;
           mouseY = y;
         } else {
-          mouseX = rect.width / 2;
-          mouseY = rect.height / 2;
+          mouseX = currentRect.width / 2 || 25;
+          mouseY = currentRect.height / 2 || 25;
         }
       };
 
